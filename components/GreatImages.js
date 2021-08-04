@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   Image,
   View,
   ScrollView,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 
 const URL = 'https://picsum.photos/v2/list?page=1&limit=20';
@@ -17,49 +16,49 @@ const URL = 'https://picsum.photos/v2/list?page=1&limit=20';
 export const GreatImages = () => {
   const [info, setInfo] = useState(null);
 
-  //   const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     await axios.get(URL).then(res => {
       setInfo(res.data);
     });
-  }, []);
-
-  if (!info) return null;
+  }, [info]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          padding: 10,
-          borderWidth: 1,
-        }}>
-        <ActivityIndicator />
-      </View>
       <ScrollView>
         <View style={styles.imagesContainer}>
-          {info.map(itemInfo => {
-            const {id, download_url, author} = itemInfo;
-            return (
-              <View key={id}>
-                <Image
-                  style={styles.images}
-                  //   onLoadEnd={setLoading(false)}
-                  source={{uri: download_url}}
-                  resizeMode="cover"
-                  //   onLoadStart={setLoading(true)}
-                />
-                {/* <ActivityIndicator
-                  style={styles.activityIndicator}
-                  animating={loading}
-                /> */}
-              </View>
-            );
-          })}
+          {info ? (
+            info.map(itemInfo => {
+              const {id, download_url, author} = itemInfo;
+              return (
+                <View key={id}>
+                  <Image
+                    style={styles.images}
+                    // onLoadEnd={setLoading(false)}
+                    source={{uri: download_url}}
+                    resizeMode="cover"
+                  />
+                </View>
+              );
+            })
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+              }}>
+              <ActivityIndicator size="large" color="darkblue" />
+              <Text
+                style={{
+                  fontSize: 22,
+                }}>
+                Server isn't responding, sorry :(
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -78,10 +77,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   images: {
-    width: 140,
-    height: 140,
-    marginHorizontal: 10,
-    marginVertical: 25,
+    width: 130,
+    height: 130,
+    marginHorizontal: 15,
+    marginVertical: 4,
   },
   activityIndicator: {
     position: 'absolute',

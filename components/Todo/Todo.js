@@ -33,9 +33,9 @@ export const Todo = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <Text style={styles.sectionTitle}>Today's tasks</Text>
+      <Text style={styles.sectionTitle}>Today's tasks</Text>
 
+      <View style={styles.tasksWrapper}>
         <View style={styles.items}>
           <ScrollView>
             {taskItems.map((item, index) => (
@@ -79,13 +79,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8EAED',
   },
-  tasksWrapper: {
-    paddingTop: 15,
-    paddingHorizontal: 10,
-  },
   sectionTitle: {
+    textAlign: 'center',
     fontSize: 20,
     fontWeight: '700',
+    marginVertical: 10,
+  },
+  tasksWrapper: {
+    paddingBottom: 15,
+    paddingHorizontal: 10,
+    borderWidth: 3,
+    borderColor: 'rgba(108, 122, 137, 1)',
+    borderRadius: 15,
+    marginHorizontal: 10,
   },
   items: {
     marginTop: 20,

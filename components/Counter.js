@@ -12,7 +12,10 @@ export const Counter = () => {
   const [count, setCount] = useState(0);
 
   const handleIncreaseCount = () => {
-    setCount(prev => prev + 1);
+    setCount(prev => {
+      if (prev < 10) return prev + 1;
+      else return prev;
+    });
   };
 
   const handleDecreaseCount = () => {
@@ -27,8 +30,10 @@ export const Counter = () => {
       <View style={styles.checkCounterText}>
         <Text style={{fontSize: 25, color: '#fff'}}>Check counter!</Text>
         <Text style={{fontSize: 20, color: '#fff'}}>
-          {count > 0
+          {count > 0 && count < 10
             ? `You have a ${count} product${count > 1 ? 's' : ''} selected!`
+            : count === 10
+            ? `${count} is max count of products!`
             : 'Please click on counter!'}
         </Text>
       </View>
@@ -38,13 +43,19 @@ export const Counter = () => {
           onPress={handleIncreaseCount}
           style={[
             styles.button,
-            {
-              backgroundColor: 'rgba(20,230,120,0.7)',
-              borderColor: '#8AFF8A',
-            },
-          ]}>
+            count === 10
+              ? {
+                  backgroundColor: 'rgba(108, 122, 137, 1)',
+                  borderColor: '#cdcdcd',
+                }
+              : {
+                  backgroundColor: 'rgba(20,230,120,0.7)',
+                  borderColor: '#8AFF8A',
+                },
+          ]}
+          disabled={count === 10}>
           <Text style={{color: '#ffd', fontSize: 16, fontWeight: '700'}}>
-            Increase count
+            {count === 10 ? 'Count is disabled' : 'Increase count'}
           </Text>
         </TouchableOpacity>
 
@@ -56,8 +67,8 @@ export const Counter = () => {
             styles.button,
             count === 0
               ? {
-                  backgroundColor: 'rgba(255,55,20,0.5)',
-                  borderColor: '#ff998f',
+                  backgroundColor: 'rgba(108, 122, 137, 1)',
+                  borderColor: '#cdcdcd',
                 }
               : {
                   backgroundColor: 'rgba(255,55,20,0.9)',
