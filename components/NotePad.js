@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'rgba(22,13,57,0.7)',
+    backgroundColor: 'rgba(218, 223, 225, 1)',
   },
   titleText: {
     fontSize: 15,
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderWidth: 3,
     borderRadius: 20,
-    borderColor: 'darkblue',
+    borderColor: 'rgba(103, 128, 159, 1)',
     fontSize: 16,
   },
   buttonStyle: {
     fontSize: 15,
     color: '#fff',
-    backgroundColor: 'darkblue',
+    backgroundColor: 'rgba(103, 128, 159, 1)',
     marginTop: 10,
     borderRadius: 20,
     width: '50%',
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   textStyle: {
     padding: 5,
     fontSize: 16,
-    color: '#fff',
+    color: 'rgba(46, 49, 49, 1)',
+    textAlign: 'justify',
   },
 });
