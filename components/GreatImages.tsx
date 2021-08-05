@@ -14,18 +14,42 @@ import {
 
 const URL = 'https://picsum.photos/v2/list?page=1&limit=20';
 
-export const GreatImages = () => {
+export const GreatImages: React.FC = () => {
   const [info, setInfo] = useState(null);
 
-  useEffect(async () => {
-    await axios.get(URL).then(res => {
+  useEffect(() => {
+    axios.get(URL).then(res => {
       setInfo(res.data);
     });
-  }, [info]);
+  }, []);
+
+  console.log('render GreatImages');
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <FlatList
+        numColumns={2}
+        keyExtractor={item => item.id}
+        data={info}
+        ListEmptyComponent={
+          <View style={styles.listEmptyComponentContainer}>
+            <ActivityIndicator size="large" color="darkblue" />
+            <Text style={styles.listEmptyComponentText}>
+              Server isn't responding, sorry :(
+            </Text>
+          </View>
+        }
+        renderItem={({item}) => (
+          <Image
+            style={styles.images}
+            source={{uri: item.download_url}}
+            resizeMode="cover"
+          />
+        )}
+      />
+
+      {/* RENDER GreatImages WITHOUT FlatList */}
+      {/* <ScrollView>
         <View style={styles.imagesContainer}>
           {info ? (
             <FlatList
@@ -57,41 +81,8 @@ export const GreatImages = () => {
               </Text>
             </View>
           )}
-
-          {/* WORK WITHOUT FlatList */}
-          {/* {info ? (
-            info.map(itemInfo => {
-              const {id, download_url, author} = itemInfo;
-              return (
-                <View key={id}>
-                  <Image
-                    style={styles.images}
-                    // onLoadEnd={setLoading(false)}
-                    source={{uri: download_url}}
-                    resizeMode="cover"
-                  />
-                </View>
-              );
-            })
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
-              }}>
-              <ActivityIndicator size="large" color="darkblue" />
-              <Text
-                style={{
-                  fontSize: 22,
-                }}>
-                Server isn't responding, sorry :(
-              </Text>
-            </View>
-          )} */}
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
@@ -112,5 +103,14 @@ const styles = StyleSheet.create({
     height: 150,
     marginHorizontal: 5,
     marginVertical: 5,
+  },
+  listEmptyComponentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+  listEmptyComponentText: {
+    fontSize: 22,
   },
 });

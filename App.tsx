@@ -6,39 +6,24 @@
  * @flow strict-local
  */
 
-import * as React from 'react';
-
+import React from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
 import {NavigationContainer} from '@react-navigation/native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+const Tab = createMaterialTopTabNavigator();
 
 import {NotePad} from './components/NotePad';
 import {Counter} from './components/Counter';
 import {Todo} from './components/Todo/Todo';
 import {GreatImages} from './components/GreatImages';
 
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {reducers} from './redux/reducers/reducers';
+const store = createStore(reducers);
 
-const Tab = createMaterialTopTabNavigator();
-
-const defaultState = {
-  text: 'Some text is awesome!',
-};
-
-const reducer = (state = defaultState, action) => {
-  switch (action.type) {
-    case 'SOME_TEXT':
-      return {...state, text: state.text + action.payload};
-
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reducer);
-
-export const App = () => {
+export const App: React.FC = () => {
+  console.log('render App');
   return (
     <Provider store={store}>
       <NavigationContainer>

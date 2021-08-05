@@ -12,9 +12,16 @@ import {
 
 import {Task} from './Task';
 
-export const Todo = () => {
-  const [task, setTask] = useState(null);
-  const [taskItems, setTaskItems] = useState([]);
+export interface DefaultState {
+  task: null | string;
+  taskItems: Array<string>;
+}
+
+export const Todo: React.FC = () => {
+  const [task, setTask] = useState<null | string>(null);
+  const [taskItems, setTaskItems] = useState<any>([]);
+
+  // const [task] = React.useState<string>('');
 
   const handleAddTask = () => {
     setTaskItems([...taskItems, task]);
@@ -27,9 +34,11 @@ export const Todo = () => {
   //   setTaskItems(itemCopy);
   // };
 
-  const handleCompleteTask = idx => {
-    setTaskItems(taskItems.filter((_, index) => index !== idx));
+  const handleCompleteTask = (idx: number) => {
+    setTaskItems(taskItems.filter((_: null, index: number) => index !== idx));
   };
+
+  console.log('render Todo task && taskItems', task, taskItems);
 
   return (
     <View style={styles.container}>
@@ -38,7 +47,7 @@ export const Todo = () => {
       <View style={styles.tasksWrapper}>
         <View style={styles.items}>
           <ScrollView>
-            {taskItems.map((item, index) => (
+            {taskItems.map((item: string, index: number) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => handleCompleteTask(index)}>
@@ -53,8 +62,8 @@ export const Todo = () => {
         <TextInput
           style={styles.input}
           placeholder="Write a task"
-          value={task}
-          onChangeText={text => setTask(text)}
+          value={task!}
+          onChangeText={(text: null | string) => setTask(text)}
         />
 
         <TouchableOpacity
@@ -89,7 +98,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingHorizontal: 10,
     borderWidth: 3,
-    borderColor: 'rgba(108, 122, 137, 1)',
+    borderColor: '#fff',
     borderRadius: 15,
     marginHorizontal: 10,
   },
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
   addWrapperDisabled: {
     width: 60,
     height: 50,
-    backgroundColor: '#ccc',
+    backgroundColor: '#dadada',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

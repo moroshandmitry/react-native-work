@@ -10,38 +10,42 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const NotePad = () => {
-  const [textInputValue, setTextInputValue] = useState('');
-  const [value, setValue] = useState('');
+import {TypesDefaultStateOfRedux} from '../redux/globalState/globalState';
+
+export const NotePad: React.FC = () => {
+  const [textInputValue, setTextInputValue] = useState<string>('');
+  const [value, setValue] = useState<string>('');
 
   // REDUX
   const dispatch = useDispatch();
-  const text = useSelector(state => state.text);
+  const text = useSelector((state: TypesDefaultStateOfRedux) => state.text);
   // REDUX
 
-  const addText = text => dispatch({type: 'SOME_TEXT', payload: text});
+  const addText = (text: string) =>
+    dispatch({type: 'SOME_TEXT', payload: text});
 
   const saveValue = () => {
     if (textInputValue) {
       AsyncStorage.setItem('valueFromInput', textInputValue);
-      setTextInputValue();
-      alert('Value will saved');
+      setTextInputValue('');
+      Alert.alert('Value will saved');
     } else {
-      alert(
-        `Please write a text in field input and press button => 'Save text'`,
-      );
+      Alert.alert(`Please write a text and press button => 'Save text'`);
     }
   };
 
   const getValue = () => {
-    AsyncStorage.getItem('valueFromInput').then(value => {
-      setValue(value);
+    AsyncStorage.getItem('valueFromInput').then((value: any) => {
+      return setValue(value);
     });
   };
+
+  console.log('render NotePad textInputValue', textInputValue);
 
   return (
     <SafeAreaView style={styles.wrapper}>

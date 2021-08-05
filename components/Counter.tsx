@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-export const Counter = () => {
+export const Counter: React.FC = () => {
   const [count, setCount] = useState(0);
 
   const handleIncreaseCount = () => {
@@ -24,6 +24,8 @@ export const Counter = () => {
       else return prev - 1;
     });
   };
+
+  console.log('render Counter', count);
 
   return (
     <SafeAreaView style={styles.container}>

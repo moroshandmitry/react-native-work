@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-export const Task = ({text}) => {
+export type Props = {
+  text: string;
+};
+
+export const Task: React.FC<Props> = ({text}) => {
   const [square, setSquare] = useState(true);
 
   const handleToggleSquare = () => {
