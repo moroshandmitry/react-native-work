@@ -12,21 +12,16 @@ import {
 
 import {Task} from './Task';
 
-export interface DefaultState {
-  task: null | string;
-  taskItems: Array<string>;
-}
-
 export const Todo: React.FC = () => {
   const [task, setTask] = useState<null | string>(null);
   const [taskItems, setTaskItems] = useState<any>([]);
-
-  // const [task] = React.useState<string>('');
 
   const handleAddTask = () => {
     setTaskItems([...taskItems, task]);
     setTask(null);
   };
+
+  console.log(Array.isArray(taskItems), 'Yooolo');
 
   // const handleCompleteTask = index => {
   //   let itemCopy = [...taskItems];

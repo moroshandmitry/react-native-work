@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 export const Counter: React.FC = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
 
   const handleIncreaseCount = () => {
     setCount(prev => {
