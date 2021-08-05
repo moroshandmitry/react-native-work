@@ -58,7 +58,8 @@ export const Todo: React.FC = () => {
           style={styles.input}
           placeholder="Write a task"
           value={task!}
-          onChangeText={(text: null | string) => setTask(text)}
+          // onChangeText={(text: null | string) => setTask(text)}
+          onChangeText={setTask}
         />
 
         <TouchableOpacity
