@@ -30,7 +30,7 @@ export const Task: React.FC<Props> = ({text}) => {
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#fff',
+    backgroundColor: '#dadada',
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
