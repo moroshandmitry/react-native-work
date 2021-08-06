@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   StyleSheet,
@@ -21,7 +21,7 @@ export const Todo: React.FC = () => {
     setTask(null);
   };
 
-  console.log(Array.isArray(taskItems), 'Yooolo');
+  console.log(Array.isArray(taskItems), 'Array.isArray(taskItems)');
 
   // const handleCompleteTask = index => {
   //   let itemCopy = [...taskItems];
@@ -60,6 +60,12 @@ export const Todo: React.FC = () => {
           value={task!}
           // onChangeText={(text: null | string) => setTask(text)}
           onChangeText={setTask}
+          keyboardType="default"
+          autoCapitalize="sentences"
+          autoCompleteType="off"
+          autoCorrect={false}
+          placeholderTextColor="grey"
+          secureTextEntry
         />
 
         <TouchableOpacity

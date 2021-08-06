@@ -18,6 +18,7 @@ import {NotePad} from './components/NotePad';
 import {Counter} from './components/Counter';
 import {Todo} from './components/Todo/Todo';
 import {GreatImages} from './components/GreatImages';
+import {Weather} from './components/Weather/Weather';
 
 import {reducers} from './redux/reducers/reducers';
 const store = createStore(reducers);
@@ -31,7 +32,8 @@ export const App: React.FC = () => {
           <Tab.Screen name="Note" component={NotePad} />
           <Tab.Screen name="Count" component={Counter} />
           <Tab.Screen name="Todo" component={Todo} />
-          <Tab.Screen name="Images" component={GreatImages} />
+          <Tab.Screen name="Img" component={GreatImages} />
+          <Tab.Screen name="Weather" component={Weather} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
