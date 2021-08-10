@@ -29,19 +29,93 @@ export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={{
+            tabBarLabelStyle: {
+              fontSize: 12,
+              fontWeight: '700',
+              textTransform: 'capitalize',
+              textAlign: 'center',
+              margin: 0,
+              paddingVertical: 3,
+              paddingHorizontal: 0,
+            },
+          }}>
           <Tab.Screen
             name="Notepad"
             options={{
-              title: 'Notepad',
-              tabBarIcon: () => <Icon name="rocket" size={20} color="#900" />,
+              title: 'Notes',
+              tabBarIcon: () => (
+                <Icon
+                  name="save"
+                  size={22}
+                  color="rgba(68, 108, 179, 1)"
+                  style={{textAlign: 'center'}}
+                />
+              ),
             }}
             component={NotePad}
           />
-          <Tab.Screen name="Count" component={Counter} />
-          <Tab.Screen name="Todo" component={Todo} />
-          <Tab.Screen name="Img" component={GreatImages} />
-          <Tab.Screen name="Weather" component={Weather} />
+          <Tab.Screen
+            name="Counter"
+            options={{
+              title: 'Count',
+              tabBarIcon: () => (
+                <Icon
+                  name="sort"
+                  size={22}
+                  color="rgba(52, 152, 219, 1)"
+                  style={{textAlign: 'center'}}
+                />
+              ),
+            }}
+            component={Counter}
+          />
+          <Tab.Screen
+            name="Todo"
+            options={{
+              title: 'Todo',
+              tabBarIcon: () => (
+                <Icon
+                  name="book"
+                  size={22}
+                  color="rgba(27, 163, 156, 1)"
+                  style={{textAlign: 'center'}}
+                />
+              ),
+            }}
+            component={Todo}
+          />
+          <Tab.Screen
+            name="image"
+            options={{
+              title: 'image',
+              tabBarIcon: () => (
+                <Icon
+                  name="image"
+                  size={22}
+                  color="rgba(123, 239, 178, 1)"
+                  style={{textAlign: 'center'}}
+                />
+              ),
+            }}
+            component={GreatImages}
+          />
+          <Tab.Screen
+            name="Weather"
+            options={{
+              title: 'Weather',
+              tabBarIcon: () => (
+                <Icon
+                  name="cloud"
+                  size={22}
+                  color="rgba(103, 128, 159, 1)"
+                  style={{textAlign: 'center'}}
+                />
+              ),
+            }}
+            component={Weather}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
