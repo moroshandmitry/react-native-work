@@ -1,13 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  SafeAreaView,
-  View,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
 import axios from 'axios';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -15,7 +7,10 @@ import LinearGradient from 'react-native-linear-gradient';
 const URL = `http://api.openweathermap.org/data/2.5/weather?q=Chisinau&units=metric&lang=en&appid=8602c35696cbe0cd4ded486c50c70007`;
 const URL_ICO = 'http://openweathermap.org/img/wn/';
 
-export const Loading = () => {
+// import {Icon} from 'react-native-elements';
+// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
+export const Loading: React.FC = () => {
   const [weather, setWeather] = useState<any>(null);
 
   const [date, setNewDate] = useState<string>('');
@@ -67,12 +62,18 @@ export const Loading = () => {
 
   return (
     <LinearGradient colors={['#00B4DB', '#0083B0']} style={styles.container}>
+      {/* <Icon name="user" type="font-awesome" color="#f50" /> */}
+      {/* <FontAwesomeIcon icon={faCoffee} /> */}
+
       {weather !== null ? (
         <View>
-          <Text>{}</Text>
           <Text style={styles.date}>{date}</Text>
           <Image
-            style={{height: 80, width: 80}}
+            style={{
+              height: 85,
+              width: 85,
+              alignSelf: 'center',
+            }}
             source={{uri: URL_ICO + `${weather.weather[0].icon}.png`}}
             resizeMode="cover"
           />
@@ -95,7 +96,14 @@ export const Loading = () => {
             Timezone in {weather.name} (GMT+{weather.timezone / 60 / 60})
           </Text>
         </View>
-      ) : null}
+      ) : (
+        <View>
+          <ActivityIndicator size="large" color="cyan" />
+          <Text style={styles.textServerNotResponding}>
+            Server isn't responding, sorry :(
+          </Text>
+        </View>
+      )}
     </LinearGradient>
   );
 };
@@ -121,5 +129,10 @@ const styles = StyleSheet.create({
   textLocation: {
     fontSize: 14,
     paddingVertical: 7,
+  },
+  textServerNotResponding: {
+    alignItems: 'center',
+    fontSize: 20,
+    color: '#fff',
   },
 });

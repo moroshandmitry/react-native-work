@@ -1,12 +1,7 @@
 import React, {useState} from 'react';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const Counter: React.FC = () => {
   const [count, setCount] = useState<number>(0);
@@ -28,12 +23,12 @@ export const Counter: React.FC = () => {
   console.log('render Counter', count);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient colors={['#4e54c8', '#8f94fb']} style={styles.container}>
       <View style={styles.checkCounterText}>
-        <Text style={{fontSize: 25, color: 'rgba(46, 49, 49, 1)'}}>
+        <Text style={{fontSize: 25, color: 'rgba(255, 255, 255, 0.9)'}}>
           Check counter!
         </Text>
-        <Text style={{fontSize: 20, color: 'rgba(46, 49, 49, 1)'}}>
+        <Text style={{fontSize: 20, color: 'rgba(255, 255, 255, 0.9)'}}>
           {count > 0 && count < 10
             ? `You have a ${count} product${count > 1 ? 's' : ''} selected!`
             : count === 10
@@ -92,7 +87,7 @@ export const Counter: React.FC = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </LinearGradient>
   );
 };
 

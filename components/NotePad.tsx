@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Keyboard,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,6 +35,8 @@ export const NotePad: React.FC = () => {
       AsyncStorage.setItem('valueFromInput', textInputValue);
       setTextInputValue('');
       Alert.alert('Value will saved');
+      // Закрытие клавиатуры
+      Keyboard.dismiss();
     } else {
       Alert.alert(`Please write a text and press button => 'Save text'`);
     }

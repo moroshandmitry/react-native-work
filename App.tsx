@@ -19,6 +19,7 @@ import {Counter} from './components/Counter';
 import {Todo} from './components/Todo/Todo';
 import {GreatImages} from './components/GreatImages';
 import {Weather} from './components/Weather/Weather';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {reducers} from './redux/reducers/reducers';
 const store = createStore(reducers);
@@ -29,7 +30,14 @@ export const App: React.FC = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Note" component={NotePad} />
+          <Tab.Screen
+            name="Notepad"
+            options={{
+              title: 'Notepad',
+              tabBarIcon: () => <Icon name="rocket" size={20} color="#900" />,
+            }}
+            component={NotePad}
+          />
           <Tab.Screen name="Count" component={Counter} />
           <Tab.Screen name="Todo" component={Todo} />
           <Tab.Screen name="Img" component={GreatImages} />

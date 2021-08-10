@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 
 import {Task} from './Task';
@@ -19,9 +20,9 @@ export const Todo: React.FC = () => {
   const handleAddTask = () => {
     setTaskItems([...taskItems, task]);
     setTask(null);
+    // To close keyboard
+    Keyboard.dismiss();
   };
-
-  console.log(Array.isArray(taskItems), 'Array.isArray(taskItems)');
 
   // const handleCompleteTask = index => {
   //   let itemCopy = [...taskItems];
@@ -45,7 +46,7 @@ export const Todo: React.FC = () => {
             {taskItems.map((item: string, index: number) => (
               <TouchableOpacity
                 key={index}
-                onPress={() => handleCompleteTask(index)}>
+                onLongPress={() => handleCompleteTask(index)}>
                 <Task text={`${item}`} />
               </TouchableOpacity>
             ))}
@@ -65,17 +66,13 @@ export const Todo: React.FC = () => {
           autoCompleteType="off"
           autoCorrect={false}
           placeholderTextColor="grey"
-          secureTextEntry
+          // secureTextEntry
         />
 
-        <TouchableOpacity
-          onPress={handleAddTask}
-          disabled={task === null || undefined}>
+        <TouchableOpacity onPress={handleAddTask} disabled={task === null}>
           <View
             style={
-              task === null || undefined
-                ? styles.addWrapperDisabled
-                : styles.addWrapper
+              task === null ? styles.addWrapperDisabled : styles.addWrapper
             }>
             <Text style={styles.addText}>+</Text>
           </View>

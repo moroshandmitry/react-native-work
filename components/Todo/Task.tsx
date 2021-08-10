@@ -15,7 +15,7 @@ export const Task: React.FC<Props> = ({text}) => {
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <TouchableOpacity onPress={handleToggleSquare}>
+        <TouchableOpacity activeOpacity={0.5} onPress={handleToggleSquare}>
           <View style={square ? styles.square : styles.squareSuccess}>
             {square}
           </View>
