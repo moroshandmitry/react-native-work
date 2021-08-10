@@ -11,7 +11,6 @@ import {
 import axios from 'axios';
 
 import LinearGradient from 'react-native-linear-gradient';
-import {Weather} from './Weather';
 
 const URL_ICO = 'http://openweathermap.org/img/wn/';
 
