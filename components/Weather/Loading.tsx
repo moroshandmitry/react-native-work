@@ -60,34 +60,43 @@ export const Loading: React.FC = () => {
     <LinearGradient colors={['#00B4DB', '#0083B0']} style={styles.container}>
       {weather !== null ? (
         <View>
-          <Text style={styles.date}>{date}</Text>
-          <Image
-            style={{
-              height: 50,
-              width: 50,
-              alignSelf: 'center',
-            }}
-            source={{uri: URL_ICO + `${weather.weather[0].icon}.png`}}
-            resizeMode="cover"
-          />
-          <Text style={styles.textWeather}>
-            {weather.name} {weather.main.temp}°C{'\n'}
-            Feels like {weather.main.feels_like}°C{'\n'}
-            {weather.weather[0].main}
-            {'\n'}
-            {weather.weather[0].description}
-          </Text>
-          <Text style={styles.textLocation}>
-            Found location coordinates of {weather.sys.country} {weather.name}
-          </Text>
-          <Text>Longitude {weather.coord.lon}</Text>
-          <Text>Latitude {weather.coord.lat}</Text>
-          <Text>Humidity {weather.main.humidity}%</Text>
-          <Text>Visibility {weather.visibility / 1000} km</Text>
-          <Text>Wind speed {weather.wind.speed} m/s</Text>
-          <Text>
-            Timezone in {weather.name} (GMT+{weather.timezone / 60 / 60})
-          </Text>
+          {weather.message === 'city not found' && weather.cod === '404' ? (
+            <View>
+              <Text style={{color: '#fff'}}>{weather.message}</Text>
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.date}>{date}</Text>
+              <Image
+                style={{
+                  height: 50,
+                  width: 50,
+                  alignSelf: 'center',
+                }}
+                source={{uri: URL_ICO + `${weather.weather[0].icon}.png`}}
+                resizeMode="cover"
+              />
+              <Text style={styles.textWeather}>
+                {weather.name} {weather.main.temp}°C{'\n'}
+                Feels like {weather.main.feels_like}°C{'\n'}
+                {weather.weather[0].main}
+                {'\n'}
+                {weather.weather[0].description}
+              </Text>
+              <Text style={styles.textLocation}>
+                Found location coordinates of {weather.sys.country}{' '}
+                {weather.name}
+              </Text>
+              <Text>Longitude {weather.coord.lon}</Text>
+              <Text>Latitude {weather.coord.lat}</Text>
+              <Text>Humidity {weather.main.humidity}%</Text>
+              <Text>Visibility {weather.visibility / 1000} km</Text>
+              <Text>Wind speed {weather.wind.speed} m/s</Text>
+              <Text>
+                Timezone in {weather.name} (GMT+{weather.timezone / 60 / 60})
+              </Text>
+            </View>
+          )}
           <View
             style={{
               flexDirection: 'row',
@@ -108,6 +117,7 @@ export const Loading: React.FC = () => {
               placeholder="Write a city"
               placeholderTextColor="#fff"
               value={city}
+              enablesReturnKeyAutomatically={true}
             />
             <TouchableOpacity
               style={

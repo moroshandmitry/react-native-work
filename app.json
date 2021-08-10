@@ -1,5 +1,9 @@
 {
   "name": "AwesomeProject",
   "displayName": "AwesomeProject",
-  "orientation": "default"
+  "orientation": "default",
+  "android": {
+    "package": "com.unifun.awesomeproject",
+    "versionCode": 1
+  }
 }

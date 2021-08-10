@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import {
   StyleSheet,
@@ -15,7 +15,7 @@ import {Task} from './Task';
 
 export const Todo: React.FC = () => {
   const [task, setTask] = useState<null | string>(null);
-  const [taskItems, setTaskItems] = useState<any>([]);
+  const [taskItems, setTaskItems] = useState<any[]>([]);
 
   const handleAddTask = () => {
     setTaskItems([...taskItems, task]);

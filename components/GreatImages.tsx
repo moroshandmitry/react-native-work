@@ -42,25 +42,35 @@ export class GreatImages extends Component<{}, GreatImagesState> {
     if (this.state.noMoreData) {
       return;
     }
-    this.setState({loadingLoader: true}, () => {
-      console.log('loadingLoader: true');
-    });
+    this.setState(
+      prevState => ({
+        loadingLoader: !prevState.loadingLoader,
+      }),
+      () => {
+        console.log('loadingLoader: true');
+      },
+    );
     const limitImages = 20;
     const URL = `https://picsum.photos/v2/list?page=${this.state.pageCurrent}&limit=${limitImages}`;
 
     axios.get(URL).then(({data}) => {
-      this.setState({
-        infoData: [...this.state.infoData, ...data],
-        loadingLoader: false,
+      this.setState(prevState => ({
+        infoData: [...prevState.infoData, ...data],
+        loadingLoader: prevState.loadingLoader,
         noMoreData: data.length < limitImages,
-      });
+      }));
     });
   };
 
   handleLoadMoreImages = () => {
     console.log('handleLoadMoreImages');
 
-    this.setState({pageCurrent: this.state.pageCurrent + 1}, this.fetchData);
+    this.setState(
+      prevState => ({
+        pageCurrent: prevState.pageCurrent + 1,
+      }),
+      this.fetchData,
+    );
   };
 
   renderFooterComponent = () =>
