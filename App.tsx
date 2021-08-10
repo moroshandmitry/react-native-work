@@ -13,13 +13,13 @@ import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 const Tab = createMaterialTopTabNavigator();
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {NotePad} from './components/NotePad';
 import {Counter} from './components/Counter';
 import {Todo} from './components/Todo/Todo';
 import {GreatImages} from './components/GreatImages';
 import {Weather} from './components/Weather/Weather';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {reducers} from './redux/reducers/reducers';
 const store = createStore(reducers);
@@ -33,6 +33,7 @@ export const App: React.FC = () => {
           screenOptions={{
             tabBarLabelStyle: {
               fontSize: 12,
+              color: 'rgba(52, 152, 219, 1)',
               fontWeight: '700',
               textTransform: 'capitalize',
               textAlign: 'center',

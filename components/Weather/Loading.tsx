@@ -1,17 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
 
 import LinearGradient from 'react-native-linear-gradient';
+import {Weather} from './Weather';
 
-const URL = `http://api.openweathermap.org/data/2.5/weather?q=Chisinau&units=metric&lang=en&appid=8602c35696cbe0cd4ded486c50c70007`;
 const URL_ICO = 'http://openweathermap.org/img/wn/';
-
-// import {Icon} from 'react-native-elements';
-// import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 export const Loading: React.FC = () => {
   const [weather, setWeather] = useState<any>(null);
+  const [city, setCity] = useState<string>('Chisinau');
 
   const [date, setNewDate] = useState<string>('');
 
@@ -35,43 +41,31 @@ export const Loading: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(URL).then(res => {
-      const {
-        name,
-        visibility,
-        timezone,
-        weather: [{main, description, icon}],
-        main: {temp, feels_like, humidity},
-        sys: {country},
-        coord: {lon, lat},
-        wind: {speed},
-      } = res.data;
-
-      setWeather({
-        name,
-        visibility,
-        timezone,
-        weather: [{main, description, icon}],
-        main: {temp, feels_like, humidity},
-        sys: {country},
-        coord: {lon, lat},
-        wind: {speed},
-      });
-    });
+    fetchData();
+    setCity('');
   }, []);
+
+  const fetchData = async () => {
+    const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=8602c35696cbe0cd4ded486c50c70007`;
+    await axios.get(URL).then(res => {
+      setWeather(res.data);
+    });
+  };
+
+  const handleSearchWeather = () => {
+    fetchData();
+    setCity('');
+  };
 
   return (
     <LinearGradient colors={['#00B4DB', '#0083B0']} style={styles.container}>
-      {/* <Icon name="user" type="font-awesome" color="#f50" /> */}
-      {/* <FontAwesomeIcon icon={faCoffee} /> */}
-
       {weather !== null ? (
         <View>
           <Text style={styles.date}>{date}</Text>
           <Image
             style={{
-              height: 85,
-              width: 85,
+              height: 50,
+              width: 50,
               alignSelf: 'center',
             }}
             source={{uri: URL_ICO + `${weather.weather[0].icon}.png`}}
@@ -95,6 +89,38 @@ export const Loading: React.FC = () => {
           <Text>
             Timezone in {weather.name} (GMT+{weather.timezone / 60 / 60})
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 10,
+              height: '11%',
+            }}>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: '#fff',
+                fontWeight: '700',
+                width: '70%',
+                color: '#fff',
+              }}
+              keyboardType="default"
+              onChangeText={setCity}
+              placeholder="Write a city"
+              placeholderTextColor="#fff"
+              value={city}
+            />
+            <TouchableOpacity
+              style={
+                city === '' ? styles.buttonSearchDisabled : styles.buttonSearch
+              }
+              onPress={handleSearchWeather}
+              disabled={city === ''}>
+              <Text style={{color: '#fff', fontSize: 18, fontWeight: '700'}}>
+                Search
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <View>
@@ -122,7 +148,7 @@ const styles = StyleSheet.create({
   },
   textWeather: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     color: 'rgba(255,255,255, 0.9)',
     fontWeight: '700',
   },
@@ -135,4 +161,39 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
+  buttonSearch: {
+    width: '30%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(150, 120, 150, 1)',
+  },
+  buttonSearchDisabled: {
+    width: '30%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
 });
+
+// const {
+//   name,
+//   visibility,
+//   timezone,
+//   weather: [{main, description, icon}],
+//   main: {temp, feels_like, humidity},
+//   sys: {country},
+//   coord: {lon, lat},
+//   wind: {speed},
+// } = res.data;
+
+// setWeather({
+//   name,
+//   visibility,
+//   timezone,
+//   weather: [{main, description, icon}],
+//   main: {temp, feels_like, humidity},
+//   sys: {country},
+//   coord: {lon, lat},
+//   wind: {speed},
+// });
+// });
