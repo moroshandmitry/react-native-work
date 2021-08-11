@@ -54,9 +54,9 @@ export const App: React.FC = () => {
                   style={{textAlign: 'center'}}
                 />
               ),
-            }}
-            component={NotePad}
-          />
+            }}>
+            {(props: any) => <NotePad {...props} />}
+          </Tab.Screen>
           <Tab.Screen
             name="Counter"
             options={{
@@ -69,9 +69,9 @@ export const App: React.FC = () => {
                   style={{textAlign: 'center'}}
                 />
               ),
-            }}
-            component={Counter}
-          />
+            }}>
+            {(props: any) => <Counter {...props} />}
+          </Tab.Screen>
           <Tab.Screen
             name="Todo"
             options={{
@@ -84,9 +84,9 @@ export const App: React.FC = () => {
                   style={{textAlign: 'center'}}
                 />
               ),
-            }}
-            component={Todo}
-          />
+            }}>
+            {(props: any) => <Todo {...props} />}
+          </Tab.Screen>
           <Tab.Screen
             name="image"
             options={{
@@ -99,9 +99,9 @@ export const App: React.FC = () => {
                   style={{textAlign: 'center'}}
                 />
               ),
-            }}
-            component={GreatImages}
-          />
+            }}>
+            {(props: any) => <GreatImages {...props} />}
+          </Tab.Screen>
           <Tab.Screen
             name="Weather"
             options={{
@@ -114,9 +114,9 @@ export const App: React.FC = () => {
                   style={{textAlign: 'center'}}
                 />
               ),
-            }}
-            component={Weather}
-          />
+            }}>
+            {(props: any) => <Weather {...props} />}
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

@@ -47,6 +47,39 @@ export const Loading: React.FC = () => {
     setCity('');
   }, []);
 
+  const axiosGetData = async () => {
+    try {
+      const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
+
+      const {
+        data: {
+          name,
+          visibility,
+          timezone,
+          weather: [{main, description, icon}],
+          main: {temp, feels_like, humidity},
+          sys: {country},
+          coord: {lon, lat},
+          wind: {speed},
+        },
+      } = await axios.get(URL);
+
+      setWeather({
+        name,
+        visibility,
+        timezone,
+        weather: [{main, description, icon}],
+        main: {temp, feels_like, humidity},
+        sys: {country},
+        coord: {lon, lat},
+        wind: {speed},
+      });
+    } catch (e) {
+      console.error('[e]', e);
+      console.log(e.response.data);
+    }
+  };
+
   const fetchData = async () => {
     const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
     // callback hell
