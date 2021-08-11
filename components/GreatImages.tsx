@@ -119,19 +119,19 @@ export class GreatImages extends Component<{}, GreatImagesState> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     flexDirection: 'column',
+    height: 'auto',
+    width: 'auto',
   },
   imagesContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     flexWrap: 'wrap',
-    marginVertical: 20,
   },
   images: {
-    width: 150,
-    height: 150,
-    marginHorizontal: 5,
-    marginVertical: 5,
+    height: 160,
+    width: 160,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listEmptyComponentContainer: {
     flex: 1,

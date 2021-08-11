@@ -14,6 +14,7 @@ import axios, {AxiosError} from 'axios';
 import {API_KEY} from '@env';
 
 import LinearGradient from 'react-native-linear-gradient';
+import {resolve} from 'dns/promises';
 
 const URL_ICO = 'http://openweathermap.org/img/wn/';
 
@@ -48,11 +49,19 @@ export const Loading: React.FC = () => {
   }, []);
 
   const axiosGetData = async () => {
-    try {
-      const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
+    const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
+    // callback hell
+    await axios
+      .get(URL)
+      .then(res => {
+        // setWeather(res.data);
 
-      const {
-        data: {
+        // const data: {
+        //   name?: string;
+        //   visibility: boolean;
+        // } = res.data;
+
+        const {
           name,
           visibility,
           timezone,
@@ -61,28 +70,34 @@ export const Loading: React.FC = () => {
           sys: {country},
           coord: {lon, lat},
           wind: {speed},
-        },
-      } = await axios.get(URL);
+        } = res.data;
 
-      setWeather({
-        name,
-        visibility,
-        timezone,
-        weather: [{main, description, icon}],
-        main: {temp, feels_like, humidity},
-        sys: {country},
-        coord: {lon, lat},
-        wind: {speed},
+        setWeather({
+          name,
+          visibility,
+          timezone,
+          weather: [{main, description, icon}],
+          main: {temp, feels_like, humidity},
+          sys: {country},
+          coord: {lon, lat},
+          wind: {speed},
+        });
+      })
+      .catch(error => {
+        // if (error.response.data.cod) {
+        //   console.log(error.response);
+        //   console.warn(Object.keys(error.response.data));
+        // }
+
+        const {cod, message} = error.response.data;
+
+        // console.log(Object.keys(error.response.data.cod));
+
+        setWeather({
+          cod,
+          message,
+        });
       });
-    } catch (error) {
-      console.log(Object.keys(error.response.data.code));
-      // console.log(res.request);
-      // const {cod, message} = res.response.data;
-      // setWeather({
-      //   cod,
-      //   message,
-      // });
-    }
   };
 
   const handleSearchWeather = () => {
@@ -94,9 +109,12 @@ export const Loading: React.FC = () => {
     <LinearGradient colors={['#00B4DB', '#0083B0']} style={styles.container}>
       {weather !== null ? (
         <View>
-          {weather.message === 'city not found' && weather.cod === '404' ? (
+          {weather.message === 'city not found' ? (
             <View>
-              <Text style={{color: '#fff'}}>{weather.message}</Text>
+              <Text
+                style={{color: '#fff', textAlign: 'center', fontWeight: '700'}}>
+                {weather.message.toUpperCase()}
+              </Text>
             </View>
           ) : (
             <View>
@@ -135,7 +153,6 @@ export const Loading: React.FC = () => {
             style={{
               flexDirection: 'row',
               marginTop: 10,
-              height: '11%',
             }}>
             <TextInput
               style={{
