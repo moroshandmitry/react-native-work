@@ -43,7 +43,7 @@ export const Loading: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    axiosGetData();
     setCity('');
   }, []);
 
@@ -74,62 +74,19 @@ export const Loading: React.FC = () => {
         coord: {lon, lat},
         wind: {speed},
       });
-    } catch (e) {
-      console.error('[e]', e);
-      console.log(e.response.data);
+    } catch (error) {
+      console.log(Object.keys(error.response.data.code));
+      // console.log(res.request);
+      // const {cod, message} = res.response.data;
+      // setWeather({
+      //   cod,
+      //   message,
+      // });
     }
   };
 
-  const fetchData = async () => {
-    const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
-    // callback hell
-    await axios
-      .get(URL)
-      .then(res => {
-        // setWeather(res.data);
-
-        // const data: {
-        //   name?: string;
-        //   visibility: boolean;
-        // } = res.data;
-        const {
-          name,
-          visibility,
-          timezone,
-          weather: [{main, description, icon}],
-          main: {temp, feels_like, humidity},
-          sys: {country},
-          coord: {lon, lat},
-          wind: {speed},
-        } = res.data;
-
-        setWeather({
-          name,
-          visibility,
-          timezone,
-          weather: [{main, description, icon}],
-          main: {temp, feels_like, humidity},
-          sys: {country},
-          coord: {lon, lat},
-          wind: {speed},
-        });
-        console.log('Hello');
-      })
-      .catch((error: Error | AxiosError<{code: number}>) => {
-        if ('isAxiosError' in error) {
-          console.log(Object.keys(error.response.data.code));
-        }
-        // console.log(res.request);
-        // const {cod, message} = res.response.data;
-        // setWeather({
-        //   cod,
-        //   message,
-        // });
-      });
-  };
-
   const handleSearchWeather = () => {
-    fetchData();
+    axiosGetData();
     setCity('');
   };
 
@@ -260,3 +217,51 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
 });
+
+// const fetchData = async () => {
+//   const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
+//   // callback hell
+//   await axios
+//     .get(URL)
+//     .then(res => {
+//       // setWeather(res.data);
+
+//       // const data: {
+//       //   name?: string;
+//       //   visibility: boolean;
+//       // } = res.data;
+//       const {
+//         name,
+//         visibility,
+//         timezone,
+//         weather: [{main, description, icon}],
+//         main: {temp, feels_like, humidity},
+//         sys: {country},
+//         coord: {lon, lat},
+//         wind: {speed},
+//       } = res.data;
+
+//       setWeather({
+//         name,
+//         visibility,
+//         timezone,
+//         weather: [{main, description, icon}],
+//         main: {temp, feels_like, humidity},
+//         sys: {country},
+//         coord: {lon, lat},
+//         wind: {speed},
+//       });
+//       console.log('Hello');
+//     })
+//     .catch((error: Error | AxiosError<{code: number}>) => {
+//       if ('isAxiosError' in error) {
+//         console.log(Object.keys(error.response.data.code));
+//       }
+//       // console.log(res.request);
+//       // const {cod, message} = res.response.data;
+//       // setWeather({
+//       //   cod,
+//       //   message,
+//       // });
+//     });
+// };
