@@ -1,10 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import {StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Counter: React.FC = () => {
   const [count, setCount] = useState<number>(0);
+
+  // useEffect(() => {
+  //   console.log('componentDidMount');
+
+  //   return () => {
+  //     console.log('componentWillUnmount');
+  //   }
+  // }, [])
 
   const handleIncreaseCount = () => {
     setCount(prev => {

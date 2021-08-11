@@ -7,8 +7,11 @@ import {
   ActivityIndicator,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
+
+import {API_KEY} from '@env';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -45,10 +48,51 @@ export const Loading: React.FC = () => {
   }, []);
 
   const fetchData = async () => {
-    const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=8602c35696cbe0cd4ded486c50c70007`;
-    await axios.get(URL).then(res => {
-      setWeather(res.data);
-    });
+    const URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=en&appid=${API_KEY}`;
+    // callback hell
+    await axios
+      .get(URL)
+      .then(res => {
+        // setWeather(res.data);
+
+        // const data: {
+        //   name?: string;
+        //   visibility: boolean;
+        // } = res.data;
+        const {
+          name,
+          visibility,
+          timezone,
+          weather: [{main, description, icon}],
+          main: {temp, feels_like, humidity},
+          sys: {country},
+          coord: {lon, lat},
+          wind: {speed},
+        } = res.data;
+
+        setWeather({
+          name,
+          visibility,
+          timezone,
+          weather: [{main, description, icon}],
+          main: {temp, feels_like, humidity},
+          sys: {country},
+          coord: {lon, lat},
+          wind: {speed},
+        });
+        console.log('Hello');
+      })
+      .catch((error: Error | AxiosError<{code: number}>) => {
+        if ('isAxiosError' in error) {
+          console.log(Object.keys(error.response.data.code));
+        }
+        // console.log(res.request);
+        // const {cod, message} = res.response.data;
+        // setWeather({
+        //   cod,
+        //   message,
+        // });
+      });
   };
 
   const handleSearchWeather = () => {
@@ -183,26 +227,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
 });
-
-// const {
-//   name,
-//   visibility,
-//   timezone,
-//   weather: [{main, description, icon}],
-//   main: {temp, feels_like, humidity},
-//   sys: {country},
-//   coord: {lon, lat},
-//   wind: {speed},
-// } = res.data;
-
-// setWeather({
-//   name,
-//   visibility,
-//   timezone,
-//   weather: [{main, description, icon}],
-//   main: {temp, feels_like, humidity},
-//   sys: {country},
-//   coord: {lon, lat},
-//   wind: {speed},
-// });
-// });

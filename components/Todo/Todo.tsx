@@ -21,7 +21,7 @@ export const Todo: React.FC = () => {
     setTaskItems([...taskItems, task]);
     setTask(null);
     // To close keyboard
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
   };
 
   // const handleCompleteTask = index => {
@@ -58,7 +58,7 @@ export const Todo: React.FC = () => {
         <TextInput
           style={styles.input}
           placeholder="Write a task"
-          value={task!}
+          value={task}
           // onChangeText={(text: null | string) => setTask(text)}
           onChangeText={setTask}
           keyboardType="default"
